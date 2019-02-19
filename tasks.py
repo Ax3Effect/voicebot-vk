@@ -32,6 +32,7 @@ webhook_group_id = "169308824"
 webhook_group_type = "club"
 webhook_group_name = "Статистика Конфы"
 sounds_folder = "sounds"
+admin_id = 10399749
 
 
 
@@ -189,10 +190,14 @@ class EventAdder:
             self.change(message, "on", "false")
             return True
         elif text.startswith("msgconf"):
+            if message["from_id"] != admin_id:
+                return False
             empty, empty2, text_to_conf = text.partition(' ')
             vk.messages.send(message=text_to_conf, peer_id=2000000001)
             return True
         elif text.startswith("audioconf"):
+            if message["from_id"] != admin_id:
+                return False
             empty, empty2, text_to_conf = text.partition(' ')
             group_id = text_to_conf.split()[0]
             if group_id == "list":
@@ -206,6 +211,8 @@ class EventAdder:
             attachm = "doc{}_{}".format(audio_msg[0]["owner_id"], audio_msg[0]["id"])
             vk.messages.send(peer_id=2000000000+int(group_id), attachment=attachm)
         elif text.startswith("rr"):
+            if message["from_id"] != admin_id:
+                return False
             empty, empty2, text_to_conf = text.partition(' ')
             group_id = text_to_conf.split()[0]
             text_to_send = text_to_conf.split(' ', 1)[1]
