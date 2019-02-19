@@ -1,0 +1,6 @@
+Flask
+celery
+pydub
+pymongo
+requests
+vk-api == 11.4.0
